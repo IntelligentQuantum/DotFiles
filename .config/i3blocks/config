@@ -27,7 +27,7 @@ color=#6a89cc
 [Clock]
 label=&#xf133;
 interval=30
-color=#50C878
+color=#d5e5e6
 
 [Internet]
 interval=10
