@@ -8,7 +8,10 @@ set $mod Mod4
 floating_modifier $mod
 
 # Screen Lock
-bindsym --release $mod+Shift+o exec i3lock -i ~/.wallpapers/Galaxy/Background.png -t
+bindsym --release $mod+Shift+o exec --no-startup-id ~/.scripts/i3lock/i3lock
+
+# ScreenShot
+bindsym --release Print exec scrot 'Screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/Pictures/Screenshots && mv $f ~/Pictures/Screenshots && xclip -selection clipboard -t image/png -i ~/Pictures/Screenshots/`ls -1 -t ~/Pictures/Screenshots | head -1`'
 
 # Brightness Control
 bindsym XF86MonBrightnessUp	exec xbacklight -inc 10
