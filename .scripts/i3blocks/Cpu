@@ -1,0 +1,33 @@
+#!/usr/bin/perl
+
+use strict;
+use utf8;
+
+my $usage = -1;
+
+$ENV{LC_ALL}="en_US";
+open (MPSTAT, 'mpstat 1 1 |') or die;
+while (<MPSTAT>)
+{
+    if (/^.*\s+(\d+\.\d+)\s+$/)
+    {
+        $usage = 100 - $1;
+        last;
+    }
+}
+close(MPSTAT);
+
+printf "%.2f%%\n", $usage;
+printf "%.2f%%\n", $usage;
+
+if ($usage >= 50)
+{
+    print "#FF0000\n";
+    exit 33;
+}
+elsif ($usage >= 100)
+{
+    print "#FFFC00\n";
+}
+
+exit 0;
