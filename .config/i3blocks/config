@@ -2,30 +2,31 @@ command=~/.scripts/i3blocks/$BLOCK_NAME
 markup=pango
 
 [Volume]
-interval=once
 signal=10
 interval=1
+color=#dcdde1
 
 [Cpu]
 interval=15
-label=&#xf085;
+label=
 color=#c9c9ff
 
 [Memory]
 interval=30
-label=&#xf013;
+label=
 color=#0fb9b1
 
 [Disk]
-label=&#xf17c;
+label=
 interval=60
+color=#ffffff
 
 [Battery]
 interval=30
 color=#6a89cc
 
 [Clock]
-label=&#xf133;
+label=
 interval=30
 color=#d5e5e6
 

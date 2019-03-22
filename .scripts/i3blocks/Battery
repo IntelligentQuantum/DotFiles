@@ -5,17 +5,17 @@ STATUS=`echo "$STATUS_FULL" | cut -d ',' -f 1`
 PERCENT=`echo "$STATUS_FULL" | cut -d ',' -f 2`
 
 if [ "$STATUS" == "Unknown" ]; then
-	echo "&#xf128; $PERCENT"
+	echo " $PERCENT"
 fi
 
 if [ "$STATUS" == "Full" ]; then
-	echo "&#xf0e7;  Full$PERCENT"
+	echo " Full$PERCENT"
 fi
 
 if [ "$STATUS" == "Charging" ]; then
-	echo "&#xf1e6;  Charging$PERCENT"
+	echo " Charging$PERCENT"
 fi
 
 if [ "$STATUS" == "Discharging" ]; then
-	echo "&#xf0e7;  Discharging$PERCENT"
+	echo " Discharging$PERCENT"
 fi
