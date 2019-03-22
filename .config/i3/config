@@ -83,16 +83,16 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 # Workspace variables
-set $ws1    "&#xf120;"
-set $ws2    "&#xf269;"
-set $ws3    "&#xf121;"
-set $ws4    "&#xf114;"
-set $ws5    "&#xf1d7;"
-set $ws6    "&#xf04b;"
-set $ws7    "&#xf1fc;"
-set $ws8    "&#xf11b;"
-set $ws9    "&#xf069;"
-set $ws10   "&#xf085;"
+set $ws1    " 1: &#xf120; "
+set $ws2    " 2: &#xf269; "
+set $ws3    " 3: &#xf121; "
+set $ws4    " 4: &#xf1d7; "
+set $ws5    " 5: &#xf114; "
+set $ws6    " 6: &#xf04b; "
+set $ws7    " 7: &#xf1fc; "
+set $ws8    " 8: &#xf11b; "
+set $ws9    " 9: &#xf069; "
+set $ws10   " 10: &#xf085; "
 
 # Switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -125,6 +125,25 @@ bindsym $mod+Shift+r restart
 # Exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
+# Assign specific windows to workspaces
+for_window [class="Firefox"]			            		move to workspace $ws2, focus
+for_window [class="QtCreator"]					            move to workspace $ws3, focus
+for_window [class="TelegramDesktop"]			        	move to workspace $ws4, focus
+for_window [class="TelegramDesktop" title="Media viewer"]	move to workspace $ws4, fullscreen, focus
+for_window [class="Telegram-desktop" title="Choose files"]	move to workspace $ws4, fullscreen, focus
+for_window [class="Steam"]			                		move to workspace $ws8, focus
+for_window [class="DDNet"]			                		move to workspace $ws8, focus
+for_window [class="csgo_linux64"]		            		move to workspace $ws8, focus
+for_window [class="Anydesk"]				            	move to workspace $ws9, focus
+for_window [class="TeamSpeak 3"]		            		move to workspace $ws9, focus
+for_window [class="VirtualBox Machine"]		        		move to workspace $ws9, focus
+for_window [class="VirtualBox Manager"]		        		move to workspace $ws9, focus
+for_window [class="VirtualBox"]				            	move to workspace $ws9, focus
+for_window [class="xfreerdp"]					            move to workspace $ws9, floating enable, focus
+for_window [class="feh"]					                floating enable
+for_window [class="Steam" title="Steam - News"]		    	floating enable
+for_window [class="Steam" title="Steam - Self Updater"]		floating enable
+
 # Resize window
 mode "resize"
 {
@@ -155,18 +174,16 @@ bindsym $mod+r mode "resize"
 bar
 {
 	status_command i3blocks -c ~/.config/i3blocks/config
+	i3bar_command i3bar -t
 	font pango:monospace 10
 	position top
-	separator_symbol "."
+	separator_symbol " "
 
 	colors
     {
-        separator #666666
-        background #000000
-        statusline #ffffff
-        focused_workspace #2c3e50 #2c3e50 #ffffff
-        active_workspace #333333 #5f676a #ffffff
-        inactive_workspace #000000 #000000 #888888
+        background #00002c00
+        focused_workspace #00002c00 #00002c00 #19B5FE
+        inactive_workspace #00002c00 #00002c00 #ffffff
 	}
 }
 
@@ -181,4 +198,3 @@ exec_always --no-startup-id dunst
 
 # Change Language Layout Shortcut
 exec_always setxkbmap -layout us,ir -option 'grp:alt_shift_toggle'
-
