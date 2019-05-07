@@ -181,7 +181,8 @@ ResourcePref resources[] =
 	{ "tabspaces",    INTEGER, &tabspaces },
 	{ "cwscale",      FLOAT,   &cwscale },
 	{ "chscale",      FLOAT,   &chscale },
-	{ "alpha",        INTEGER,   &alpha },
+	{ "alpha",        INTEGER, &alpha },
+	{ "border",       INTEGER, &borderpx },
 };
 
 /*
@@ -200,17 +201,21 @@ static MouseShortcut mshortcuts[] =
 
 MouseKey mkeys[] =
 {
-	/* button     mask                function        argument */
-	{ Button4,    ShiftMask,          kscrollup,      {.i =  1} },
-	{ Button5,    ShiftMask,          kscrolldown,    {.i =  1} },
-	{ Button4,    MODKEY,             kscrollup,      {.i =  1} },
-	{ Button5,    MODKEY,             kscrolldown,    {.i =  1} },
-	{ Button4,    MODKEY|ShiftMask,   zoom,           {.f =  +1} },
-	{ Button5,    MODKEY|ShiftMask,   zoom,           {.f =  -1} },
+	/* button 		mask            		function        argument */
+	{ Button4,		ShiftMask,      		kscrollup,      {.i =  1} },
+	{ Button5,		ShiftMask,      		kscrolldown,    {.i =  1} },
+	{ Button4,		MODKEY,         		kscrollup,      {.i =  1} },
+	{ Button5,		MODKEY,         		kscrolldown,    {.i =  1} },
+	{ Button4,		MODKEY|ShiftMask,       zoom,      		{.f =  +1} },
+	{ Button5,		MODKEY|ShiftMask,       zoom,    		{.f =  -1} }
 };
 
 static char *openurlcmd[] = { "/bin/sh", "-c",
-    "xurls | uniq | dmenu -l 10 | xargs -r xdg-open",
+    "sed 's/.*│//g' | tr -d '\n' | grep -aEo '((http|https)://|www\\.)[a-zA-Z0-9./&?=_-]*' | uniq | sed 's/^www./http:\\/\\/www\\./g' | dmenu -p 'Follow which url?' -l 10 | xargs -r xdg-open",
+    "externalpipe", NULL };
+
+static char *copyurlcmd[] = { "/bin/sh", "-c",
+    "sed 's/.*│//g' | tr -d '\n' | grep -aEo '((http|https)://|www\\.)[a-zA-Z0-9./&?=_-]*' | uniq | sed 's/^www./http:\\/\\/www\\./g' | dmenu -p 'Copy which url?' -l 10 | tr -d '\n' | xclip -selection clipboard",
     "externalpipe", NULL };
 
 static Shortcut shortcuts[] =
@@ -222,12 +227,12 @@ static Shortcut shortcuts[] =
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
 	{ MODKEY|ShiftMask,     XK_Prior,       zoom,           {.f = +1} },
 	{ MODKEY|ShiftMask,     XK_Next,        zoom,           {.f = -1} },
-	{ MODKEY,		        XK_Home,	    zoomreset,		{.f =  0} },
+	{ MODKEY,		        XK_Home,		zoomreset,		{.f =  0} },
 	{ ShiftMask,            XK_Insert,      clippaste,      {.i =  0} },
 	{ MODKEY,               XK_c,           clipcopy,       {.i =  0} },
 	{ MODKEY,               XK_v,           clippaste,      {.i =  0} },
 	{ MODKEY,               XK_p,           selpaste,       {.i =  0} },
-	{ MODKEY,		        XK_Num_Lock,	numlock,		{.i =  0} },
+	{ MODKEY,				XK_Num_Lock,	numlock,		{.i =  0} },
 	{ MODKEY,               XK_Control_L,   iso14755,       {.i =  0} },
 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
 	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
@@ -237,15 +242,16 @@ static Shortcut shortcuts[] =
 	{ MODKEY,            	XK_j,   		kscrolldown,    {.i =  1} },
 	{ MODKEY,            	XK_Up,  		kscrollup,      {.i =  1} },
 	{ MODKEY,            	XK_Down,   		kscrolldown,    {.i =  1} },
-	{ MODKEY,	            XK_u,			kscrollup,      {.i = -1} },
-	{ MODKEY,  		        XK_d,			kscrolldown,   	{.i = -1} },
+	{ MODKEY,	        	XK_u,			kscrollup,      {.i = -1} },
+	{ MODKEY,  				XK_d,			kscrolldown,   	{.i = -1} },
 	{ MODKEY|ShiftMask,     XK_Up,          zoom,           {.f = +1} },
 	{ MODKEY|ShiftMask,     XK_Down,        zoom,           {.f = -1} },
 	{ MODKEY|ShiftMask,     XK_K,           zoom,           {.f = +1} },
 	{ MODKEY|ShiftMask,     XK_J,           zoom,           {.f = -1} },
 	{ MODKEY|ShiftMask,     XK_U,           zoom,           {.f = +2} },
 	{ MODKEY|ShiftMask,     XK_D,           zoom,           {.f = -2} },
-	{ MODKEY,		        XK_l,			externalpipe,	{ .v = openurlcmd } },
+	{ MODKEY,				XK_l,			externalpipe,	{ .v = openurlcmd } },
+	{ MODKEY,				XK_y,			externalpipe,	{ .v = copyurlcmd } },
 };
 
 /*
